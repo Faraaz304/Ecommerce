@@ -8,6 +8,6 @@ import lombok.*;
 @Getter
 @Setter
 public class ProductPurchaseRequest {
-    private Integer productId;
+    private Long productId;
     private double quantity;
 }

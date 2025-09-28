@@ -25,5 +25,5 @@ public class ProductRequest {
     private double availableQuantity;
 
     @NotNull(message = "Category ID is required")
-    private Integer categoryId;
+    private Long categoryId;
 }

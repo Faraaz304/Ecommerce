@@ -16,43 +16,21 @@ public class ProductController {
 
     private final ProductService service;
 
-    /**
-     * Create a new product
-     * POST /api/v1/products
-     */
     @PostMapping
-    public ResponseEntity<Integer> createProduct(
-            @RequestBody @Valid ProductRequest request
-    ) {
+    public ResponseEntity<Long> createProduct(@RequestBody @Valid ProductRequest request) {
         return ResponseEntity.ok(service.createProduct(request));
     }
 
-    /**
-     * Purchase products
-     * POST /api/v1/products/purchase
-     */
     @PostMapping("/purchase")
-    public ResponseEntity<List<ProductPurchaseResponse>> purchaseProducts(
-            @RequestBody List<ProductPurchaseRequest> request
-    ) {
+    public ResponseEntity<List<ProductPurchaseResponse>> purchaseProducts(@RequestBody List<ProductPurchaseRequest> request) {
         return ResponseEntity.ok(service.purchaseProducts(request));
     }
 
-    /**
-     * Find product by ID
-     * GET /api/v1/products/{product-id}
-     */
     @GetMapping("/{product-id}")
-    public ResponseEntity<ProductResponse> findById(
-            @PathVariable("product-id") Integer productId
-    ) {
+    public ResponseEntity<ProductResponse> findById(@PathVariable("product-id") Long productId) {
         return ResponseEntity.ok(service.findById(productId));
     }
 
-    /**
-     * Find all products
-     * GET /api/v1/products
-     */
     @GetMapping
     public ResponseEntity<List<ProductResponse>> findAll() {
         return ResponseEntity.ok(service.findAll());
