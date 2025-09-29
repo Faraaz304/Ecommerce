@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -14,26 +15,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final OrderService orderService;
+    private final OrderService service;
 
-    // Create a new order
+    // Create order (returns only ID)
     @PostMapping
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderRequest request) {
-        OrderResponse response = orderService.createOrder(request);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<Integer> createOrder(@RequestBody @Valid OrderRequest request) {
+        return ResponseEntity.ok(service.createOrder(request));
+    }
+
+    // Get all orders (with order lines)
+    @GetMapping
+    public ResponseEntity<List<OrderResponse>> findAll() {
+        return ResponseEntity.ok(service.findAllOrders());
     }
 
     // Get order by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<OrderResponse> getOrder(@PathVariable Long id) {
-        OrderResponse response = orderService.getOrderById(id);
-        return ResponseEntity.ok(response);
-    }
-
-    // Get all orders
-    @GetMapping
-    public ResponseEntity<List<OrderResponse>> getAllOrders() {
-        List<OrderResponse> orders = orderService.getAllOrders();
-        return ResponseEntity.ok(orders);
+    @GetMapping("/{orderId}")
+    public ResponseEntity<OrderResponse> findById(@PathVariable Integer orderId) {
+        return ResponseEntity.ok(service.findById(orderId));
     }
 }

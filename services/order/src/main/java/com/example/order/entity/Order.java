@@ -3,24 +3,27 @@ package com.example.order.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "orders") // "order" is reserved keyword in SQL
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "orders") // avoid reserved keyword conflict
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    private Long customerId;
+    private Integer customerId;
 
-    private String status; // e.g. PENDING, COMPLETED
+    private String status;
+
+    private LocalDateTime orderDate;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderLine> orderLines;

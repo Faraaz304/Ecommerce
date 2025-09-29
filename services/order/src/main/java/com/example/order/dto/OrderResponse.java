@@ -2,6 +2,7 @@ package com.example.order.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -10,19 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class OrderResponse {
-    private Long id;
-    private Long customerId;
+    private Integer id;
+    private Integer customerId;
     private String status;
+    private LocalDateTime orderDate;
     private List<OrderLineResponse> orderLines;
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class OrderLineResponse {
-        private Long productId;
-        private Integer quantity;
-        private Double price;
-    }
 }
