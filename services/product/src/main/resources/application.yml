@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/product_service?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root                # <-- replace with your MySQL username
-    password: Kithmir@786         # <-- replace with your MySQL password
+    password: numpy@123         # <-- replace with your MySQL password
     driver-class-name: com.mysql.cj.jdbc.Driver
   
   # JPA Configuration
