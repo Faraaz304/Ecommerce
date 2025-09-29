@@ -9,7 +9,7 @@ import com.example.order.repository.OrderLineRepository;
 import com.example.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import com.example.order.exception.OrderLineNotFoundException;
 import java.util.List;
 
 @Service
@@ -21,7 +21,7 @@ public class OrderLineService {
 
     public Integer createOrderLine(OrderLineRequest request) {
         Order order = orderRepository.findById(request.getOrderId())
-                .orElseThrow(() -> new RuntimeException("Order not found with id " + request.getOrderId()));
+                .orElseThrow(() -> new OrderLineNotFoundException(request.getOrderId()));
 
         OrderLine line = OrderLineMapper.toEntity(request);
         line.setOrder(order);

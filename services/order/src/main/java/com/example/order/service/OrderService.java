@@ -7,6 +7,7 @@ import com.example.order.mapper.OrderMapper;
 import com.example.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.example.order.exception.OrderNotFoundException;
 
 import java.util.List;
 
@@ -32,6 +33,6 @@ public class OrderService {
     public OrderResponse findById(Integer id) {
         return repository.findById(id)
                 .map(OrderMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("Order not found with id " + id));
+                .orElseThrow(() -> new OrderNotFoundException(id));
     }
 }
