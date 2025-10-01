@@ -1,4 +1,4 @@
-package com.example.payment.entity;
+package com.example.payment.dto;  // ✅ Correct package
 
 public enum PaymentMethod {
     CREDIT_CARD,

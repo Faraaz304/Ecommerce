@@ -24,9 +24,9 @@ public class PaymentRequest {
     @Min(1)
     private BigDecimal amount;
 
-    @NotBlank
-    private String paymentMethod;
+    @NotNull
+    private PaymentMethod paymentMethod;
 
     @NotBlank
-    private String orderReference; // expected in request as well
+    private String orderReference;
 }

@@ -1,5 +1,6 @@
 package com.example.payment.entity;
 
+import com.example.payment.dto.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +22,8 @@ public class Payment {
 
     private BigDecimal amount;
 
-    private String paymentMethod; // e.g., CREDIT_CARD, UPI
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
     private LocalDateTime paymentDate;
 
