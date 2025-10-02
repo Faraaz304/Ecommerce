@@ -24,4 +24,6 @@ public class PaymentService {
         CustomerResponse customer = customerClient.getCustomerById(request.getCustomerId());
         return mapper.toResponse(payment, customer);
     }
+
+   
 }
