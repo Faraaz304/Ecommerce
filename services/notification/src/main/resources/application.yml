@@ -1,0 +1,34 @@
+# Port for this notification-service
+server:
+  port: 8085
+
+# Spring Application Name
+spring:
+  application:
+    name: notification-service
+
+  # KAFKA CONFIGURATION
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        # We will use this simpler property. It's robust and easier to manage.
+        spring.json.trusted.packages: "com.example.notification.kafka.model"
+
+  # EMAIL (SMTP) CONFIGURATION
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: f55637158726cc # <-- MAKE SURE YOU HAVE REPLACED THIS
+    password: 891a5e48f43e76 # <-- MAKE SURE YOU HAVE REPLACED THIS
+    properties:
+      # CORRECT INDENTATION
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
