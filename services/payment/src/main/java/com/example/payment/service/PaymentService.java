@@ -19,16 +19,9 @@ public class PaymentService {
     private final CustomerClient customerClient;
 
     public PaymentResponse createPayment(PaymentRequest request) {
-        // 1. Map request → entity
         Payment payment = mapper.toEntity(request);
-
-        // 2. Save to DB
         repository.save(payment);
-
-        // 3. Call customer service via Feign
         CustomerResponse customer = customerClient.getCustomerById(request.getCustomerId());
-
-        // 4. Map to response
         return mapper.toResponse(payment, customer);
     }
 }
