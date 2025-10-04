@@ -5,19 +5,29 @@ spring:
   # Database Configuration (MySQL)
   datasource:
     url: jdbc:mysql://localhost:3306/payment_service?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    username: root                # <-- replace with your MySQL username
-    password: numpy@123         # <-- replace with your MySQL password
+    username: root
+    password: numpy@123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   # JPA Configuration
   jpa:
     hibernate:
-      ddl-auto: update           # create/update tables automatically
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
+
+  # # --- ADD THIS KAFKA SECTION ---
+  # kafka:
+  #   producer:
+  #     # Address of the Kafka server from docker-compose
+  #     bootstrap-servers: localhost:9092
+  #     # How to format the message key (we'll use a string)
+  #     key-serializer: org.apache.kafka.common.serialization.StringSerializer
+  #     # How to format the message value (we'll convert our Java object to JSON)
+  #     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 # Server Configuration
 server:
