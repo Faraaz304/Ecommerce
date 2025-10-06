@@ -16,19 +16,43 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        # We will use this simpler property. It's robust and easier to manage.
         spring.json.trusted.packages: "com.example.notification.kafka.model"
 
-  # EMAIL (SMTP) CONFIGURATION
+  # # --- GMAIL (SMTP) CONFIGURATION - CURRENTLY ACTIVE ---
+  # mail:
+  #   host: smtp.gmail.com
+  #   port: 587 # Port for TLS/STARTTLS
+  #   username: ${GMAIL_USERNAME} # <-- Your full Gmail address (e.g., your-email@gmail.com)
+  #   password: ${GMAIL_APP_PASSWORD} # <-- The 16-character App Password you just generated
+  #   properties:
+  #     mail:
+  #       smtp:
+  #         auth: true
+  #         starttls:
+  #           enable: true # This is required for Gmail
+
   mail:
-    host: smtp.mailtrap.io
-    port: 2525
-    username:  ${MAILTRAP_USERNAME} # <-- MAKE SURE YOU HAVE REPLACED THIS
-    password:  ${MAILTRAP_PASSWORD} # <-- MAKE SURE YOU HAVE REPLACED THIS
+    host: localhost
+    port: 1025
+    username: ''
+    password: ''
     properties:
-      # CORRECT INDENTATION
       mail:
         smtp:
-          auth: true
+          auth: false
           starttls:
-            enable: true
+            enable: false
+        
+
+  # --- MAILTRAP CONFIGURATION - COMMENTED OUT FOR LATER USE ---
+  # mail:
+  #   host: smtp.mailtrap.io
+  #   port: 2525
+  #   username: ${MAILTRAP_USERNAME}
+  #   password: ${MAILTRAP_PASSWORD}
+  #   properties:
+  #     mail:
+  #       smtp:
+  #         auth: true
+  #         starttls:
+  #           enable: true
