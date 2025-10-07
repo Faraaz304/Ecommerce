@@ -1,31 +1,9 @@
 
-# server:
-#   port: 8081
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-  instance:
-    prefer-ip-address: true
-
-# # Config Client
-# spring:
-#   cloud:
-#     config:
-#       uri: http://localhost:8888
-#       fail-fast: true
-
-
-
 spring:
   application:
     name: customer-service
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: customer_db
-
-server:
-  port: 8081
+  config:
+    import: "optional:configserver:http://localhost:8888"
+  cloud:
+    config:
+      enabled: true
