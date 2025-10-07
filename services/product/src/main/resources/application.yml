@@ -28,9 +28,9 @@ server:
   port: 8082
 
 # Eureka Client (if using service discovery)
-# eureka:
-#   client:
-#     service-url:
-#       defaultZone: http://localhost:8761/eureka
-#   instance:
-#     prefer-ip-address: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
