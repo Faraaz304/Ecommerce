@@ -4,59 +4,8 @@ spring:
   config:
     import: "configserver:http://localhost:8888"
   cloud:
-    gateway:
-      routes:
-        # Customer Service Routes
-        - id: customer-service
-          uri: lb://CUSTOMER-SERVICE
-          predicates:
-            - Path=/api/customers/**
-          filters:
-            - RewritePath=/api/customers/(?<segment>.*), /${segment}
-        
-        # Product Service Routes
-        - id: product-service
-          uri: lb://PRODUCT-SERVICE
-          predicates:
-            - Path=/api/products/**
-          filters:
-            - RewritePath=/api/products/(?<segment>.*), /${segment}
-        
-        # Order Service Routes
-        - id: order-service
-          uri: lb://ORDER-SERVICE
-          predicates:
-            - Path=/api/orders/**
-          filters:
-            - RewritePath=/api/orders/(?<segment>.*), /${segment}
-        
-        # Payment Service Routes
-        - id: payment-service
-          uri: lb://PAYMENT-SERVICE
-          predicates:
-            - Path=/api/payments/**
-          filters:
-            - RewritePath=/api/payments/(?<segment>.*), /${segment}
-      
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowedHeaders: "*"
-            allowCredentials: false
-
-server:
-  port: 8080
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    hostname: localhost
+    config:
+      fail-fast: true
+      retry:
+        initial-interval: 1000
+        max-attempts: 6

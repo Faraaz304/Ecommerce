@@ -1,11 +1,82 @@
+# spring:
+#   cloud:
+#     gateway:
+#       httpclient:
+#         connect-timeout: 5000
+#         response-timeout: 10s
+#       default-filters:
+#         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+#       globalcors:
+#         add-to-simple-url-handler-mapping: true
+#         cors-configurations:
+#           '[/**]':
+#             allowedOrigins: 
+#               - "http://localhost:3000"
+#               - "http://localhost:4200"
+#             allowedMethods: "*"
+#             allowedHeaders: "*"
+#             allowCredentials: true
+#             maxAge: 3600
+
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: health,info,gateway
+#   endpoint:
+#     health:
+#       show-details: always
+
+# logging:
+#   level:
+#     org.springframework.cloud.gateway: DEBUG
+#     org.springframework.web.cors: DEBUG
+
+
+
 spring:
   cloud:
     gateway:
       httpclient:
         connect-timeout: 5000
         response-timeout: 10s
+      
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      
+      routes:
+        # Customer Service Routes
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/api/customers/**
+          filters:
+            - RewritePath=/api/customers/(?<segment>.*), /${segment}
+        
+        # Product Service Routes
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - RewritePath=/api/products/(?<segment>.*), /${segment}
+        
+        # Order Service Routes
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - RewritePath=/api/orders/(?<segment>.*), /${segment}
+        
+        # Payment Service Routes
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/payments/**
+          filters:
+            - RewritePath=/api/payments/(?<segment>.*), /${segment}
+      
       globalcors:
         add-to-simple-url-handler-mapping: true
         cors-configurations:
@@ -13,16 +84,32 @@ spring:
             allowedOrigins: 
               - "http://localhost:3000"
               - "http://localhost:4200"
-            allowedMethods: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
             allowedHeaders: "*"
             allowCredentials: true
             maxAge: 3600
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+    prefer-ip-address: false
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,gateway
+        include: health,info,gateway,routes
   endpoint:
     health:
       show-details: always
@@ -31,3 +118,4 @@ logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.web.cors: DEBUG
+    reactor.netty: DEBUG
