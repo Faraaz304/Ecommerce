@@ -10,13 +10,13 @@ spring:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       
       routes:
-        # Customer Service Routes
+        # Customer Service Routes (FIXED)
         - id: customer-service
           uri: lb://CUSTOMER-SERVICE
           predicates:
             - Path=/api/customers/**
           filters:
-            - RewritePath=/api/customers/(?<segment>.*), /${segment}
+            - RewritePath=/api/customers/(?<segment>.*), /api/customers/${segment}
         
         # Product Service Routes
         - id: product-service
@@ -24,7 +24,7 @@ spring:
           predicates:
             - Path=/api/products/**
           filters:
-            - RewritePath=/api/products/(?<segment>.*), /${segment}
+            - RewritePath=/api/products/(?<segment>.*), /api/products/${segment}
         
         # Order Service Routes
         - id: order-service
@@ -32,9 +32,9 @@ spring:
           predicates:
             - Path=/api/orders/**
           filters:
-            - RewritePath=/api/orders/(?<segment>.*), /${segment}
+            - RewritePath=/api/orders/(?<segment>.*), /api/orders/${segment}
 
-         # Order Lines Routes (New)
+        # Order Lines Routes
         - id: order-lines-service
           uri: lb://ORDER-SERVICE
           predicates:
@@ -48,7 +48,7 @@ spring:
           predicates:
             - Path=/api/payments/**
           filters:
-            - RewritePath=/api/payments/(?<segment>.*), /${segment}
+            - RewritePath=/api/payments/(?<segment>.*), /api/payments/${segment}
       
       globalcors:
         add-to-simple-url-handler-mapping: true
